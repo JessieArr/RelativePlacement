@@ -45,6 +45,7 @@
     <Compile Include="RelativePlacementContest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RawScore.cs" />
+    <Compile Include="RelativePlacementContestResult.cs" />
     <Compile Include="RelativePlacementException.cs" />
     <Compile Include="RelativeScore.cs" />
   </ItemGroup>

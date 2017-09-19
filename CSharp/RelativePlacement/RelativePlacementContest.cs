@@ -52,7 +52,7 @@ namespace RelativePlacement
             Judges.Add(newJudge);
         }
 
-        public void JudgeContest()
+        public RelativePlacementContestResult JudgeContest()
         {
             if (HeadJudge == null)
             {
@@ -60,9 +60,16 @@ namespace RelativePlacement
             }
             if (Judges.Count % 2 != 1)
             {
+                // Because Relative Placement Scoring relies on establishing majorities to 
+                // rank contestants, the number of judges must be odd for the algorithm to work.
                 throw new RelativePlacementException("Number of judges must be odd!");
             }
+            foreach (var judge in Judges)
+            {
+                // TODO: all the things
+            }
 
+            return new RelativePlacementContestResult();
         }
     }
 }
