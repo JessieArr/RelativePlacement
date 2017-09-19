@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace RelativePlacement
 {
-    public class Class1
+    public class RelativePlacementException : Exception
     {
+        public RelativePlacementException(string message) : base(message)
+        {
+            
+        }
     }
 }
