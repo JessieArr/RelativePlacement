@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelativePlacement", "RelativePlacement.csproj", "{CE3D3FC0-530D-4BD3-A021-67045D5C76DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelativePlacement.Test", "RelativePlacement.Test\RelativePlacement.Test.csproj", "{EF46AD85-CA1B-427B-B572-8669FD5F7BBB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE3D3FC0-530D-4BD3-A021-67045D5C76DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE3D3FC0-530D-4BD3-A021-67045D5C76DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE3D3FC0-530D-4BD3-A021-67045D5C76DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE3D3FC0-530D-4BD3-A021-67045D5C76DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF46AD85-CA1B-427B-B572-8669FD5F7BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF46AD85-CA1B-427B-B572-8669FD5F7BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF46AD85-CA1B-427B-B572-8669FD5F7BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF46AD85-CA1B-427B-B572-8669FD5F7BBB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
