@@ -51,5 +51,18 @@ namespace RelativePlacement
             }
             Judges.Add(newJudge);
         }
+
+        public void JudgeContest()
+        {
+            if (HeadJudge == null)
+            {
+                throw new RelativePlacementException("Head judge must be specified!");
+            }
+            if (Judges.Count % 2 != 1)
+            {
+                throw new RelativePlacementException("Number of judges must be odd!");
+            }
+
+        }
     }
 }
