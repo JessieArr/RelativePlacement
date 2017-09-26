@@ -129,5 +129,12 @@ namespace RelativePlacement.Test
             var expectedRawScoreCount = _SUT.Judges.Count * _SUT.Contestants.Count;
             Assert.True(_SUT.RawScores.Count == expectedRawScoreCount);
         }
+
+        [Fact]
+        public void RelativeScoreCount_IsExpected()
+        {
+            var expectedRelativeScoreCount = _SUT.Judges.Count * _SUT.Contestants.Count;
+            Assert.True(_SUT.RelativeScores.Count == expectedRelativeScoreCount);
+        }
     }
 }

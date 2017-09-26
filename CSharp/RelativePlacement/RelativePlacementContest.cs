@@ -83,19 +83,17 @@ namespace RelativePlacement
                 // rank contestants, the number of judges must be odd for the algorithm to work.
                 throw new RelativePlacementException("Number of judges must be odd!");
             }
-            foreach (var judge in Judges)
-            {
-                GetRelativeScores();
-            }
+
+            GetRelativeScores();
 
             return new RelativePlacementContestResult();
         }
 
         private void GetRelativeScores()
         {
-            var groupedRawScores = RawScores.GroupBy(x => x.Judge);
-            foreach (var judgeRawScores in groupedRawScores)
+            foreach (var judge in Judges)
             {
+                var judgeRawScores = RawScores.Where(x => x.Judge == judge).ToList();
                 var relativeScores = GetJudgeRelativeScores(judgeRawScores);
                 foreach (var score in relativeScores)
                 {
@@ -104,7 +102,7 @@ namespace RelativePlacement
             }
         }
 
-        private IList<RelativeScore> GetJudgeRelativeScores(IGrouping<Judge, RawScore> judgeScores)
+        private IList<RelativeScore> GetJudgeRelativeScores(List<RawScore> judgeScores)
         {
             var relativeScores = new List<RelativeScore>();
             var orderedScores = judgeScores.OrderByDescending(x => x.Score);
@@ -112,6 +110,7 @@ namespace RelativePlacement
             foreach (var score in orderedScores)
             {
                 relativeScores.Add(new RelativeScore(i, score.Judge, score.Contestant));
+                i++;
             }
 
             return relativeScores;
