@@ -6,5 +6,10 @@ namespace RelativePlacement
     {
         public string DisplayName;
         public IList<RelativeScore> RelativeScores;
+
+        public Contestant(string displayName)
+        {
+            DisplayName = displayName;
+        }
     }
 }

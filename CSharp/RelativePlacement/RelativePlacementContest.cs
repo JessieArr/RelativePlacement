@@ -13,11 +13,17 @@ namespace RelativePlacement
         public IList<Judge> Judges { get; }
         public Judge HeadJudge { get; private set; }
 
+        public IList<RawScore> RawScores { get; }
+        public IList<RelativeScore> RelativeScores { get; }
+
+
         public RelativePlacementContest(string contestName)
         {
             ContestName = contestName;
             Contestants = new List<Contestant>();
             Judges = new List<Judge>();
+            RawScores = new List<RawScore>();
+            RelativeScores = new List<RelativeScore>();
         }
 
         public void SetHeadJudge(Judge headJudge)
@@ -52,6 +58,19 @@ namespace RelativePlacement
             Judges.Add(newJudge);
         }
 
+        public void AddRawScore(Judge judge, Contestant contestant, double rawScore)
+        {
+            if (judge == null)
+            {
+                throw new ArgumentNullException(nameof(judge));
+            }
+            if (contestant == null)
+            {
+                throw new ArgumentNullException(nameof(contestant));
+            }
+            RawScores.Add(new RawScore(judge, contestant, rawScore));
+        }
+
         public RelativePlacementContestResult JudgeContest()
         {
             if (HeadJudge == null)
@@ -66,10 +85,36 @@ namespace RelativePlacement
             }
             foreach (var judge in Judges)
             {
-                // TODO: all the things
+                GetRelativeScores();
             }
 
             return new RelativePlacementContestResult();
+        }
+
+        private void GetRelativeScores()
+        {
+            var groupedRawScores = RawScores.GroupBy(x => x.Judge);
+            foreach (var judgeRawScores in groupedRawScores)
+            {
+                var relativeScores = GetJudgeRelativeScores(judgeRawScores);
+                foreach (var score in relativeScores)
+                {
+                    RelativeScores.Add(score);
+                }
+            }
+        }
+
+        private IList<RelativeScore> GetJudgeRelativeScores(IGrouping<Judge, RawScore> judgeScores)
+        {
+            var relativeScores = new List<RelativeScore>();
+            var orderedScores = judgeScores.OrderByDescending(x => x.Score);
+            var i = 1;
+            foreach (var score in orderedScores)
+            {
+                relativeScores.Add(new RelativeScore(i, score.Judge, score.Contestant));
+            }
+
+            return relativeScores;
         }
     }
 }

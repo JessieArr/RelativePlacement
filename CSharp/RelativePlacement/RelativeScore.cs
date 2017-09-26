@@ -2,9 +2,9 @@
 {
     public class RelativeScore
     {
-        public int OrdinalPlace { get; }
         public Judge Judge { get; }
         public Contestant Contestant { get; }
+        public int OrdinalPlace { get; }
 
         public RelativeScore(int ordinalPlace, Judge judge, Contestant contestant)
         {
