@@ -112,6 +112,9 @@ namespace RelativePlacement
                     var finalPlacement = new FinalPlacement();
                     finalPlacement.Contestant = candidate.Contestant;
                     finalPlacement.Place = highestPlacementAvailableToAward;
+                    finalPlacement.AwardedInRound = place;
+                    finalPlacement.PlacementType = PlacementTypeEnum.MajorityInRound;
+
                     FinalPlacements.Add(finalPlacement);
                     contestantsWithoutFinalPlacements.Remove(candidate.Contestant);
                     highestPlacementAvailableToAward++;
