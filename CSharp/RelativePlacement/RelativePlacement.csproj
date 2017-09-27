@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contestant.cs" />
+    <Compile Include="FinalPlacement.cs" />
+    <Compile Include="IntermediateScore.cs" />
     <Compile Include="Judge.cs" />
     <Compile Include="RelativePlacementContest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

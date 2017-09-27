@@ -15,6 +15,12 @@ namespace RelativePlacement
 
         public IList<RawScore> RawScores { get; }
         public IList<RelativeScore> RelativeScores { get; }
+        public IList<FinalPlacement> FinalPlacements { get; }
+
+        public int JudgeCountForMajority
+        {
+            get { return Convert.ToInt32(Math.Ceiling(Judges.Count / 2.0)); }
+        }
 
 
         public RelativePlacementContest(string contestName)
@@ -24,6 +30,7 @@ namespace RelativePlacement
             Judges = new List<Judge>();
             RawScores = new List<RawScore>();
             RelativeScores = new List<RelativeScore>();
+            FinalPlacements = new List<FinalPlacement>();
         }
 
         public void SetHeadJudge(Judge headJudge)
@@ -86,6 +93,31 @@ namespace RelativePlacement
 
             GetRelativeScores();
 
+            var highestPlacementAvailableToAward = 1;
+            var contestantsWithoutFinalPlacements = Contestants.ToList();
+            for (var place = 1; place < Contestants.Count + 1; place++)
+            {
+                var candidatesForPlacement = new List<IntermediateScore>();
+                foreach (var contestant in contestantsWithoutFinalPlacements)
+                {
+                    var intermediateScoreForPlacement = GetContestantScoreThroughPlace(contestant, place);
+                    if (intermediateScoreForPlacement.RelativePlacementCountAtOrBelowPlacement >= JudgeCountForMajority)
+                    {
+                        candidatesForPlacement.Add(intermediateScoreForPlacement);
+                    }
+                }
+
+                foreach (var candidate in candidatesForPlacement)
+                {
+                    var finalPlacement = new FinalPlacement();
+                    finalPlacement.Contestant = candidate.Contestant;
+                    finalPlacement.Place = highestPlacementAvailableToAward;
+                    FinalPlacements.Add(finalPlacement);
+                    contestantsWithoutFinalPlacements.Remove(candidate.Contestant);
+                    highestPlacementAvailableToAward++;
+                }
+            }
+
             return new RelativePlacementContestResult();
         }
 
@@ -114,6 +146,16 @@ namespace RelativePlacement
             }
 
             return relativeScores;
+        }
+
+        private IntermediateScore GetContestantScoreThroughPlace(Contestant contestant, int place)
+        {
+            var scoresForPlacement = RelativeScores.Where(x => x.Contestant == contestant && x.OrdinalPlace <= place);
+            var sum = scoresForPlacement.Sum(x => x.OrdinalPlace);
+
+            var intermediateScore = new IntermediateScore(contestant, place, scoresForPlacement.Count(), sum);
+
+            return intermediateScore;
         }
     }
 }

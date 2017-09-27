@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace RelativePlacement.Test
@@ -34,6 +35,19 @@ namespace RelativePlacement.Test
         private List<Contestant> _TestContestantList = new List<Contestant>();
         private List<Judge> _TestJudgeList = new List<Judge>();
 
+        private Contestant romieAndJulie;
+        private Contestant marcAndCleo;
+        private Contestant georgeAndGracie;
+        private Contestant jackAndAnnie;
+        private Contestant rhettAndScarlett;
+        private Contestant rockyAndAdrian;
+        private Contestant fredAndGinger;
+        private Contestant barneyAndBetty;
+        private Contestant rickyAndLucy;
+        private Contestant kenAndBarbie;
+        private Contestant ikeAndMamie;
+        private Contestant wardAndJune;
+
         public MasterTest()
         {
             _SUT = new RelativePlacementContest("Test Competition");
@@ -64,18 +78,18 @@ namespace RelativePlacement.Test
             _SUT.Judges.Add(judge6);
             _SUT.Judges.Add(judge7);
 
-            var romieAndJulie = new Contestant("Romie & Julie");
-            var marcAndCleo = new Contestant("Marc & Cleo");
-            var georgeAndGracie = new Contestant("George & Gracie");
-            var jackAndAnnie = new Contestant("Jack & Annie");
-            var rhettAndScarlett = new Contestant("Rhett & Scarlett");
-            var rockyAndAdrian = new Contestant("Rocky & Adrian");
-            var fredAndGinger = new Contestant("Fred & Ginger");
-            var barneyAndBetty = new Contestant("Barney & Betty");
-            var rickyAndLucy = new Contestant("Ricky & Lucy");
-            var kenAndBarbie = new Contestant("Ken & Barbie");
-            var ikeAndMamie = new Contestant("Ike & Mamie");
-            var wardAndJune = new Contestant("Ward & June");
+            romieAndJulie = new Contestant("Romie & Julie");
+            marcAndCleo = new Contestant("Marc & Cleo");
+            georgeAndGracie = new Contestant("George & Gracie");
+            jackAndAnnie = new Contestant("Jack & Annie");
+            rhettAndScarlett = new Contestant("Rhett & Scarlett");
+            rockyAndAdrian = new Contestant("Rocky & Adrian");
+            fredAndGinger = new Contestant("Fred & Ginger");
+            barneyAndBetty = new Contestant("Barney & Betty");
+            rickyAndLucy = new Contestant("Ricky & Lucy");
+            kenAndBarbie = new Contestant("Ken & Barbie");
+            ikeAndMamie = new Contestant("Ike & Mamie");
+            wardAndJune = new Contestant("Ward & June");
 
             _TestContestantList.Add(romieAndJulie);
             _TestContestantList.Add(marcAndCleo);
@@ -135,6 +149,125 @@ namespace RelativePlacement.Test
         {
             var expectedRelativeScoreCount = _SUT.Judges.Count * _SUT.Contestants.Count;
             Assert.True(_SUT.RelativeScores.Count == expectedRelativeScoreCount);
+        }
+
+        [Fact]
+        public void JudgeScoreCounts_AreExpected()
+        {
+            foreach (var judge in _SUT.Judges)
+            {
+                var judgeScores = _SUT.RelativeScores.Where(x => x.Judge == judge);
+                Assert.True(judgeScores.Count() == _SUT.Contestants.Count);
+            }
+        }
+
+        [Fact]
+        public void ContestantScoreCounts_AreExpected()
+        {
+            foreach (var contestant in _SUT.Contestants)
+            {
+                var contestantScores = _SUT.RelativeScores.Where(x => x.Contestant == contestant);
+                Assert.True(contestantScores.Count() == _SUT.Judges.Count);
+            }
+        }
+
+        [Fact]
+        public void JudgeCountForMajority_IsExpected()
+        {
+            Assert.True(_SUT.JudgeCountForMajority == 4);
+        }
+
+        [Fact]
+        public void AllTwelvePlacementsAreAwarded()
+        {
+            for (var i = 1; i <= 12; i++)
+            {
+                Assert.True(_SUT.FinalPlacements.Single(x => x.Place == i) != null);
+            }
+        }
+
+        [Fact]
+        public void JackAndAnnie_PlacedFirst()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == jackAndAnnie);
+            Assert.Equal(finalPlacement.Place, 1);
+        }
+
+        [Fact]
+        public void RickyAndLucy_PlacedSecond()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == rickyAndLucy);
+            Assert.Equal(finalPlacement.Place, 2);
+        }
+
+        [Fact]
+        public void FredAndGinger_PlacedThird()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == fredAndGinger);
+            Assert.Equal(finalPlacement.Place, 3);
+        }
+
+        [Fact]
+        public void WardAndJune_PlacedFourth()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == wardAndJune);
+            Assert.Equal(finalPlacement.Place, 4);
+        }
+
+        [Fact]
+        public void GeorgeAndGrace_PlacedFifth()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == georgeAndGracie);
+            Assert.Equal(finalPlacement.Place, 5);
+        }
+
+        [Fact]
+        public void RhettAndScarlett_PlacedSixth()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == rhettAndScarlett);
+            Assert.Equal(finalPlacement.Place, 6);
+        }
+
+        [Fact]
+        public void KenAndBarbie_PlacedSeventh()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == kenAndBarbie);
+            Assert.Equal(finalPlacement.Place, 7);
+        }
+
+        [Fact]
+        public void MarcAndCleo_PlacedEigth()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == marcAndCleo);
+            Assert.Equal(finalPlacement.Place, 8);
+        }
+
+        [Fact]
+        public void BarneyAndBetty_PlacedNinth()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == barneyAndBetty);
+            Assert.Equal(finalPlacement.Place, 9);
+        }
+
+        [Fact]
+        public void RockyAndAdrian_PlacedTenth()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == rockyAndAdrian);
+            Assert.Equal(finalPlacement.Place, 10);
+        }
+
+        [Fact]
+        public void RomieAndJulie_PlacedEleventh()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == romieAndJulie);
+            Assert.Equal(finalPlacement.Place, 11);
+        }
+
+        [Fact]
+        public void IkeAndMamie_PlacedTwelfth()
+        {
+            var finalPlacement = _SUT.FinalPlacements.Single(x => x.Contestant == ikeAndMamie);
+            Assert.Equal(finalPlacement.Place, 12);
         }
     }
 }
